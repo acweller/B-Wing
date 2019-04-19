@@ -1,0 +1,111 @@
+# Configurações iniciais
+
+mkdir B-Wing
+cd B-Wing
+mkdir server
+cd server
+npm init --yes
+npm i express morgan promise-mysql cors
+
+Agora você sabe que deve utilizar o --save somente para instalar módulos que serão usados em produção, e o --save-dev somente para módulos que serão usados no momento do desenvolvimento.
+=> npm i
+=> npm i --production
+
+mkdir src
+cd src
+criar index.ts
+
+## em server:
+npm install -g typescript   (global, já instalado)
+tsc --init  (para inicializar o typescript)
+
+## mudar no tsconfig.json
+target: es6
+outDir: ./build
+
+## rodar para montar o diretorio build:
+tsc (para compilar o TS)
+
+node build/index.js    mostras o conteúdo do JS
+
+No package.json mudar
+"scripts": {
+  "build": "tsc -w"
+},
+
+## e depois basta rodar esse script via npm para compilar as alterações:
+npm run build  (Obs.: ao alterar o TS já é compilado para o JS)
+
+
+
+## Abrir outro terminal:
+
+para carregar as dependencies:
+npm i nodemon -D
+
+No package.json mudar
+"scripts": {
+  "build": "tsc -w"
+  "dev": "nodemon build/index.js"
+},
+
+## Rodar "dev" para executar o JS compilado
+npm run dev
+
+
+
+# SERVER SETTINGS (Usar express E node)
+
+em server rodar para instalar as dependencies para o express
+npm i @types/express -D
+
+
+## Preencher o index.ts com informações do server e acessar a porta 3000 do localhost
+
+## Criar os arquivos de Rotas
+indexRoutes => esta rota vai para /
+gamesRoutes => esta vai para /api/games
+
+#depois importar morgan e cors e executar:
+npm i @types/morgan @types/cors -D
+
+Configurar o morgan cors e o express
+
+# Database -- Using mysql
+
+Criar o BD
+depois dentro de 'source' incluir
+database.ts (para conectar ao BD)
+e
+keys.ts (para Configurar a chave de acesso)
+
+Criar os controllers para conectar ao BD e enviar os dados pelas Rotas
+
+
+# REST API -- Usando NodeJS e mysql
+
+https://www.getpostman.com/downloads/ <-- programa para testar o envio de POST para o servidor uma aplicação
+neste dá para simular o envio de conteúdo através do POST
+em HEADERS
+key=Content-Type value=application/json
+em BODY (*raw)
+{
+  "title": "Detroit Become Human",
+  "description": "A ps4 game",
+  "image": "https://www.meups4.com.br/wp-content/uploads/2017/06/Detroit-Become-Human.jpg"
+}
+
+{
+  "title": "Undertale",
+  "description": "A second ps4 game",
+  "image": "https://i.ytimg.com/vi/MT4hxXRK-Zo/maxresdefault.jpg"
+}
+
+
+
+no backend criar metodos assinconos para manipular o BD
+
+public async create (req: Request, res: Response): Promise<void> {
+  await pool.query('INSERT INTO games set ?', [req.body]);
+  res.json({message: 'Game Saved'});
+}
