@@ -1,3 +1,6 @@
+# Dicas Atom
+https://atom.io/packages/angular-snippets
+
 # Configurações iniciais
 
 mkdir B-Wing
@@ -109,6 +112,83 @@ public async create (req: Request, res: Response): Promise<void> {
   await pool.query('INSERT INTO games set ?', [req.body]);
   res.json({message: 'Game Saved'});
 }
+
+
+-----------------------------
+
+FrontEnd
+
+npm install -g @angular/cli
+ng new client --routing  (cria client e pasta app)
+cd client
+ng g c components/navigation (generate component de navegação)
+ng g c components/game-form
+ng g c components/game-list
+
+cd src/app
+mkdir models   (para armazenar os modelos)
+echo "" > Game.ts
+cd ../../..
+
+ng g s services/games   (cria um serviço)
+
+## iniciar o serviço do Angular
+ng serve
+O serviço inicia em: http://localhost:4200/
+
+Alterar o app.component (deixar só a última linha do route) e incluir o
+<app-navigation></app-navigation>
+
+Isso insere o navigation.component.html
+
+Entrar no site do bootstrap e copiar o link para o CSS:
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+Colar dentro do index.html de 'source'
+
+Copiar um modelo para a barra de navegação e colar no componente específico
+Fazer as edições
+
+Dica: acessar o site de modelos Free:
+https://bootswatch.com/
+
+Olhar um modelo e copiar o link para o css dele:
+https://bootswatch.com/4/pulse/bootstrap.min.css
+
+Mudar o CSS no index
+
+Criar ROTAS para a interface:
+* Abrir em app o arquivo "app-routing.module.ts"
+Mudar Routes = [ AQUI ]
+[
+  {
+   path: '',             //// o caminho inicial será redirecionado para /games (abaixo)
+   redirectTo: '/games',
+   pathMatch: 'full'
+  },
+  {
+    path: 'games',
+    component: GameListComponent
+  },
+]
+
+precisa importar o componente:
+import { GameListComponent } from './components/game-list/game-list.component';
+
+
+Incluir conteiners para configurar os componentes
+
+<div class="container p-4">
+
+
+Configurando as rotas ???
+
+em app.module.ts, importar a classe de serviço games (GamesService) e Preencher o providers[]
+em games.service.ts deve-se fazer: import { HttpClient } from '@angular/commom/http';
+e codificar o construtor e os metodos para acessar os servicos
+
+em Models/Game.ts
+criamos as Interfaces para os modelos de dados:
 
 ================================================================================
 === Inclusão de novos detalhes ao arquivo de testes ============================
