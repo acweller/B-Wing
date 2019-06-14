@@ -3,3 +3,8 @@
 
 
 Dicas sobre [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+
+
+================================================================================
+=== Este texto foi inserido pela branch Anderson ===============================
+================================================================================
