@@ -109,3 +109,7 @@ public async create (req: Request, res: Response): Promise<void> {
   await pool.query('INSERT INTO games set ?', [req.body]);
   res.json({message: 'Game Saved'});
 }
+
+================================================================================
+=== Inclusão de novos detalhes ao arquivo de testes ============================
+================================================================================
