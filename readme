@@ -115,6 +115,8 @@ public async create (req: Request, res: Response): Promise<void> {
 
 
 -----------------------------
+-----------------------------
+
 
 FrontEnd
 
@@ -128,15 +130,15 @@ ng g c components/game-list
 cd src/app
 mkdir models   (para armazenar os modelos)
 echo "" > Game.ts
-cd ../../..
+cd ../../.. #volta para o client
 
 ng g s services/games   (cria um serviço)
 
-## iniciar o serviço do Angular
+## iniciar o serviço FrontEnd o Angular
 ng serve
 O serviço inicia em: http://localhost:4200/
 
-Alterar o app.component (deixar só a última linha do route) e incluir o
+Alterar o app.component.html (deixar só a última linha do route) e incluir o
 <app-navigation></app-navigation>
 
 Isso insere o navigation.component.html
@@ -144,10 +146,29 @@ Isso insere o navigation.component.html
 Entrar no site do bootstrap e copiar o link para o CSS:
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-Colar dentro do index.html de 'source'
+Colar dentro do client/src/index.html
 
 Copiar um modelo para a barra de navegação e colar no componente específico
-Fazer as edições
+Fazer as edições ex.: <a class="nav-link" href="/games/add">ADD Game</a>
+========
+<div class="conteiner">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">ngMySql CRUD</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/games">Games</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/games/add">ADD Game</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+========
 
 Dica: acessar o site de modelos Free:
 https://bootswatch.com/
@@ -157,14 +178,16 @@ https://bootswatch.com/4/pulse/bootstrap.min.css
 
 Mudar o CSS no index
 
+
 Criar ROTAS para a interface:
+=============================
 * Abrir em app o arquivo "app-routing.module.ts"
 Mudar Routes = [ AQUI ]
 [
   {
    path: '',             //// o caminho inicial será redirecionado para /games (abaixo)
    redirectTo: '/games',
-   pathMatch: 'full'
+   pathMatch: 'full'     //// necessário incluir esta linha
   },
   {
     path: 'games',
@@ -172,24 +195,227 @@ Mudar Routes = [ AQUI ]
   },
 ]
 
-precisa importar o componente:
+precisa importar o componente no AppRoutingModule:
 import { GameListComponent } from './components/game-list/game-list.component';
 
 
-Incluir conteiners para configurar os componentes
 
-<div class="container p-4">
+Incluir em "app.component.html" conteiners para configurar os componentes
+---------------------------
+<div class="conteiner p-4">
+  <router-outlet></router-outlet>
+</div>
+---------------------------
+Ajustar o navigation para que fique dentro de um container tbm:
+<div class="conteiner">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    ... Igual acima
+  </nav>
+</div>
+---------------------------
 
 
-Configurando as rotas ???
+Para obter os dados dos GAMES devemos configurar os SERVICES de APP:
+=> Configurando as rotas
+GamesService.ts
 
 em app.module.ts, importar a classe de serviço games (GamesService) e Preencher o providers[]
 em games.service.ts deve-se fazer: import { HttpClient } from '@angular/commom/http';
-e codificar o construtor e os metodos para acessar os servicos
+e codificar o construtor e os métodos para acessar os servicos
+
+------app.module----------------------------
+import { GamesService } from "./services/games.service";
+...
+providers: [
+  GamesService
+],
+----------------------------------
+
+------games.service----------------------------
+import { HttpClient } from '@angular/common/http';
+...
+getGames(){
+  return this.http.get(`${this.API_URI}/games`);
+}
+
+getGame(id: string){
+  return this.http.get(`${this.API_URI}/games/${id}`);
+}
+
+deleteGame(id: string){
+  return this.http.delete(`${this.API_URI}/games/${id}`);
+}
+
+saveGame(game: Game){
+  return this.http.post(`${this.API_URI}/games`, game);
+}
+
+updateGame(id: string, game: Game): Observable<Game>{
+  return this.http.put(`${this.API_URI}/games/${id}`, game);
+}
+----------------------------------
 
 em Models/Game.ts
 criamos as Interfaces para os modelos de dados:
+----------------------
+export interface Game{
+  id?: number,
+  title?: string,
+  description?: string,
+  image?: string,
+  created_at?: Date
+}
+----------------------
 
-================================================================================
-=== Inclusão de novos detalhes ao arquivo de testes ============================
-================================================================================
+Em app.module incluir o modulo de http:
+import { HttpClientModule } from "@angular/common/http";
+...
+imports: [
+  ...,
+  HttpClientModule
+],
+
+
+Importar o serviço dentro de game-list.component.ts
+-----------------
+import { GamesService } from "../../services/games.service";
+...
+constructor(private gamesService: GamesService) { }
+
+@HostBinding('class') classes = 'row'; // Organizar em linhas
+
+ngOnInit() {
+  this.gamesService.getGames().subscribe(
+    res => console.log(res),  // Resposta via console
+    err => console.error(err) // error
+  )
+}
+-----------------
+
+Armazenar o Games em uma estrutura de Any:
+games: any = [];
+constructor(private gamesService: GamesService) { }
+ngOnInit() {
+  this.gamesService.getGames().subscribe(
+    res => {
+      this.games = res;
+    },  // Resposta
+    err => console.error(err) // error
+  )
+}
+
+
+Depois obter esses objetos no HTML através de ngFor
+<div class="col-md-4" *ngFor="let game of games">
+  <div class="card text-center">
+    <div class="card-header">
+      {{game.title}}
+    </div>
+  </div>
+</div>
+
+
+
+Incluir o corpo do jogo (Primeiro configurar FONTAWESOME.COM)
+E terminar de configurar a apresentação dos itens retornados pelo ngFor
+<div class="col-md-4" *ngFor="let game of games">
+  <div class="card text-center">
+    <div class="card-header bg-dark text-white d-flex justify-content-beetwen align-itens-center">
+      {{game.title}}
+      <button class="btn btn-danger">
+        <i class="far fa-trash-alt"></i>
+      </button>
+    </div>
+    <img [src]="game.image" class="card-img-top">
+    <div class="card-body">
+      <p>{{game.description}}</p>
+      <a href="#" class="btn btn-info btn-block">
+        EDIT GAME
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+Depois mudar em navigation de HREF para routerLink (usar ajax)
+
+<li class="nav-item">
+  <a class="nav-link" routerLink="/games">Games</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" routerLink="/games/add">ADD Game</a>
+</li>
+
+
+
+
+
+Repetir para GameFormComponent, na rota game/add
+GAME-FORM.COMPONENTE.HTML
+=========================
+<div class="col-md-4 offset-md-4">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <input type="text" name="title" [(ngModel)]="game.title" placeholder="Title" class="form-control" autofocus>
+        </div>
+        <div class="form-group">
+          <textarea name="description" [(ngModel)]="game.description" placeholder="Description" rows="2" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="url" name="image" [(ngModel)]="game.image" placeholder="Image" class="form-control">
+        </div>
+        <button class="btn btn-success btn-block" (click)="saveNewGame()">
+          SAVE
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+GAME-FORM.COMPONENT.TS
+======================
+...
+import { Game } from 'src/app/models/Game';
+import { GamesService } from 'src/app/services/games.service';
+...
+export class GameFormComponent implements OnInit {
+
+  @HostBinding('class') classes = "row";
+
+  game: Game = {
+    id: 0,
+    title: '',
+    description: '',
+    image: '',
+    created_at: new Date()
+  };
+...
+saveNewGame(){
+  //console.log(this.game);
+  delete this.game.created_at;
+  delete this.game.id;
+  this.gamesService.saveGame(this.game)
+    .subscribe(
+      res => {
+        console.log(res);
+      },
+      err => console.error(err)
+    )
+}
+
+
+APP.MODULE.TS
+=============
+...
+import { FormsModule } from "@angular/forms";
+...
+  imports: [
+    ...
+    FormsModule
+  ],
