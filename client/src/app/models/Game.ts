@@ -3,5 +3,5 @@ export interface Game{
   title?: string,
   description?: string,
   image?: string,
-  created_at?: Date
+  created_at?: Date,
 }
