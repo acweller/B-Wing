@@ -1,6 +1,6 @@
-CREATE DATABASE ng_games;
+CREATE DATABASE id9957157_ng_games;
 
-USE ng_games;
+USE id9957157_ng_games;
 
 CREATE TABLE games (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,

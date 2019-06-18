@@ -3,6 +3,6 @@ export default {
     host: 'localhost',
     user: 'phpmyadmin',
     password: 'phpmyadmin',
-    database: 'ng_games'
+    database: 'id9957157_ng_games'
   }
 }
