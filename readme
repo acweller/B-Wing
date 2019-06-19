@@ -10,6 +10,10 @@ cd server
 npm init --yes
 npm i express morgan promise-mysql cors
 
+npm i ng
+
+#ng build --prod
+
 Agora você sabe que deve utilizar o --save somente para instalar módulos que serão usados em produção, e o --save-dev somente para módulos que serão usados no momento do desenvolvimento.
 => npm i
 => npm i --production
