@@ -2,6 +2,21 @@
 [Video aula sobre Angular Mysql CRUD Tutorial, REST API Node & Typescript](https://www.youtube.com/watch?v=lxYB79ANJM8)
 
 
+
+Instalar no servidor LEDS-WEB:
+- Webmin ( https://172.16.174.48:10000/ - root:senha)
+- Apache ( http://172.16.174.48  -- Porta 80 )
+- MySql
+- PHP
+- PHPMyAdmin ( http://172.16.174.48/phpmyadmin/ )
+
+https://www.digitalocean.com/community/tutorials/como-instalar-e-proteger-o-phpmyadmin-no-ubuntu-16-04-pt
+https://chartio.com/resources/tutorials/how-to-grant-all-privileges-on-a-database-in-mysql/
+GRANT ALL PRIVILEGES ON *.*  TO 'tolkien'@'localhost';
+
+
+
+
 Dicas sobre [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
 
 

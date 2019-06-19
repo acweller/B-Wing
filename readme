@@ -18,6 +18,20 @@ mkdir src
 cd src
 criar index.ts
 
+------------------------------------------------------------------
+https://vijayjakhar.com/how-to-run-php-and-phpmyadmin-with-cloud9/
+------------------------------------------------------------------
+Step 1 :- Create a Account with Cloud9 at https://c9.io/
+Step 2 :- Move to Dashboard and Create New Workspace
+Step 3 :- Open Workspace and Start Editing
+Step 4 :- Now Start Mysql with Command ( mysql-ctl start ).
+Step 5 :- Install phpmyadmin with ( phpmyadmin-ctl install )
+Step 6 :- Run mysql with ( mysql-ctl cli ) and find Hostname with command ( SHOW VARIABLES WHERE Variable_name = ‘hostname’; )
+Step 7 :- Run your php with http://(workspace Name)-(username).c9users.io/ like http://php-uname.c9users.io/
+Step 8 :- Run php myadmin with https://php-uname.c9.io/phpmyadmin with username and without password
+------------------------------------------------------------------
+
+
 ## em server:
 npm install -g typescript   (global, já instalado)
 tsc --init  (para inicializar o typescript)
@@ -147,6 +161,8 @@ Entrar no site do bootstrap e copiar o link para o CSS:
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 Colar dentro do client/src/index.html
+
+https://getbootstrap.com.br/docs/4.1/examples/
 
 Copiar um modelo para a barra de navegação e colar no componente específico
 Fazer as edições ex.: <a class="nav-link" href="/games/add">ADD Game</a>
