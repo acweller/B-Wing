@@ -166,7 +166,6 @@ Entrar no site do bootstrap e copiar o link para o CSS:
 
 Colar dentro do client/src/index.html
 
-https://getbootstrap.com.br/docs/4.1/examples/
 
 Copiar um modelo para a barra de navegação e colar no componente específico
 Fazer as edições ex.: <a class="nav-link" href="/games/add">ADD Game</a>
@@ -190,13 +189,20 @@ Fazer as edições ex.: <a class="nav-link" href="/games/add">ADD Game</a>
   </nav>
 ========
 
+
+https://getbootstrap.com.br/docs/4.1/examples/
+https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
+
 Dica: acessar o site de modelos Free:
 https://bootswatch.com/
 
 Olhar um modelo e copiar o link para o css dele:
+https://bootswatch.com/pulse/
 https://bootswatch.com/4/pulse/bootstrap.min.css
 
 Mudar o CSS no index
+
+https://fontawesome.com/icons?d=gallery
 
 
 Criar ROTAS para a interface:
