@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class GamesService {
 
-  API_URI = 'http://localhost:3000/api';
+  API_URI = 'http://localhost:3000/vgames';
 
   constructor(private http: HttpClient) {
 

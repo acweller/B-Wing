@@ -66,8 +66,8 @@ npm i nodemon -D
 
 No package.json mudar
 "scripts": {
-  "build": "tsc -w"
-  "dev": "nodemon build/index.js"
+  "build": "tsc -w",
+  "dev": "nodemon build/index.js",
 },
 
 ## Rodar "dev" para executar o JS compilado
@@ -85,7 +85,7 @@ npm i @types/express -D
 
 ## Criar os arquivos de Rotas
 indexRoutes => esta rota vai para /
-gamesRoutes => esta vai para /api/games
+gamesRoutes => esta vai para /vgames/games
 
 #depois importar morgan e cors e executar:
 npm i @types/morgan @types/cors -D
