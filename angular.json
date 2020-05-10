@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "B-Wing"
+  "defaultProject": "B-Wing",
+  "cli": {
+    "analytics": false
+  }
 }
